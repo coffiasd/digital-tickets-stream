@@ -13,17 +13,15 @@ contract Ticket is ERC721, Ownable {
 
     Counters.Counter private _tokenIdCounter;
 
-    constructor(uint256 price,string symbol,string name){
-        _name = name;
-        _symbol = symbol;
+    constructor(uint256 price,string memory name,string memory symbol) ERC721(name,symbol) {
         _price = price;
     }
 
-    function publicMint() public {
+    function publicMint() payable public {
         require(msg.value>=_price,"price error");
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
+        _safeMint(msg.sender, tokenId);
     }
 
     //onlyOwner
