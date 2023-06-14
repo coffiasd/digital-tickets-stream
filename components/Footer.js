@@ -8,12 +8,12 @@ export default function Footer() {
             method: "wallet_addEthereumChain",
             params: [
                 {
-                    "chainId": "0x1389",
-                    "chainName": "Mantle Testnet",
-                    "rpcUrls": ["https://rpc.testnet.mantle.xyz"],
+                    "chainId": "137",
+                    "chainName": "Polygon",
+                    "rpcUrls": ["https://polygon-rpc.com"],
                     "nativeCurrency": {
-                        "name": "BIT",
-                        "symbol": "BIT",
+                        "name": "MATIC",
+                        "symbol": "MATIC",
                         "decimals": 18
                     }
                 }
@@ -41,7 +41,7 @@ export default function Footer() {
                 <span className="footer-title text-black">Wellet</span>
                 <div className='flex flex-row cursor-pointer' onClick={addNetwork}>
                     <div className='my-auto'><Image src="/mm.svg" width={30} height={30} /></div>
-                    <div className='my-auto'>Add MetaMask Testnet</div>
+                    <div className='my-auto'>Add MetaMask POLYGON</div>
                 </div>
             </div>
             <div>

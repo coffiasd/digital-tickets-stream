@@ -5,7 +5,9 @@ import React from "react";
 import { Alert } from '../components/alert.jsx';
 import { useState, useEffect } from "react";
 import Link from 'next/link';
-import { FaUserAlt, FaPlusSquare, FaListUl, FaAffiliatetheme } from "react-icons/fa";
+import { FaListUl } from "react-icons/fa";
+import { Polybase } from "@polybase/client";
+import { faker } from '@faker-js/faker';
 
 const Header = dynamic(() => import('../components/Header'), {
     ssr: false,
@@ -13,18 +15,62 @@ const Header = dynamic(() => import('../components/Header'), {
 
 export default function Lists() {
 
+    //database.
+    const db = new Polybase({
+        defaultNamespace: process.env.NEXT_PUBLIC_NAME_SPACE,
+    });
+    const collectionReference = db.collection("Room");
+
     const [lists, setLists] = useState([]);
 
-    const getList = async () => {
+    const getRoomList = async () => {
         let ret = [];
-        for (let i = 0; i < 20; i++) {
-            ret.push(i);
+        const records = await collectionReference.get();
+        // console.log(records.data);
+        for (let i = 0; i < records.data.length; i++) {
+            records.data[i].data.image = faker.image.url();
+            records.data[i].data.avatar = faker.image.avatar();
+            records.data[i].data.view = getViews(records.data[i].data.createAt);
+            records.data[i].data.diff = getTimeDifference(records.data[i].data.createAt);
+            ret.push(records.data[i].data);
         }
         setLists(ret);
+
+    }
+
+    const getViews = (timestamp) => {
+        const currentTime = Math.floor(Date.now() / 1000);
+        const timeDifference = currentTime - timestamp / 1000;
+        let v = parseInt(timeDifference / 1000);
+        if (v < 1) {
+            return "<1";
+        }
+        if (v > 100) {
+            return ">100";
+        }
+        return v;
+    }
+
+    const getTimeDifference = (timestamp) => {
+        const currentTime = Math.floor(Date.now() / 1000);
+        const timeDifference = currentTime - timestamp / 1000;
+        if (timeDifference < 3600) {
+            const min = Math.floor(timeDifference / 60);
+            return min + ' mins';
+        } else if (timeDifference < 86400) {
+            const hours = Math.floor(timeDifference / 3600);
+            return hours + ' hours';
+        } else if (timeDifference < 2592000) {
+            const days = Math.floor(timeDifference / 86400);
+            return days + ' days';
+        } else {
+            // const months = Math.floor(timeDifference / 2592000);
+            return ' 1 months';
+        }
     }
 
     useEffect(() => {
-        getList();
+        getRoomList();
     }, [])
 
     return (
@@ -48,24 +94,29 @@ export default function Lists() {
                     <div className="divider"></div>
                     <div className="-m-1 flex flex-wrap md:-m-2">
 
+                        {lists && lists.length == 0 && <button className="btn">
+                            <span className="loading loading-spinner"></span>
+                            loading
+                        </button>}
+
                         {lists.map((item, index) => (
-                            <Link className='' href="/info">
+                            <Link key={index} className='' href={`/info?id=${item.id}`}>
                                 <div className="flex w-1/4 flex-wrap cursor-pointer mt-10">
                                     <div className="w-full p-1 md:p-2">
                                         <img
                                             alt="gallery"
                                             className="block h-full w-full rounded-lg object-cover object-center"
-                                            src="https://tecdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp" />
+                                            src={item.image} />
                                     </div>
                                     <div className='flex'>
                                         <div className='flex-none ml-2'>
-                                            <img width="30" className="mask mask-circle" src="https://yt3.ggpht.com/TNOytUYxQBFw3ETzlB1OCeCyqYkNxEJZxRO2xAa5CXjK-Fb9bGw3BLV3Z-IwRFE2Kl1vleN9=s68-c-k-c0x00ffffff-no-rj" />
+                                            <img width="30" className="mask mask-circle" src={item.avatar} />
                                         </div>
 
-                                        <div className='flex-1 mx-2 font-bold'>this is a long stream titiel</div>
+                                        <div className='flex-1 mx-2 font-bold'>{item.title}</div>
                                     </div>
                                     <div className="m-auto mt-2 text-sm text-gray-400">
-                                        167k views - 1 month ago
+                                        {item.view}k views - {item.diff} ago
                                     </div>
                                 </div>
                             </Link>

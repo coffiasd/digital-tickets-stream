@@ -24,7 +24,9 @@ export default function Info() {
             <Header />
             <Alert />
 
-            <Detail />
+            <div className="min-h-screen mb-20">
+                <Detail />
+            </div>
 
 
             <Footer />

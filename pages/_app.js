@@ -13,7 +13,7 @@ import {
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 
-const { chains, provider } = configureChains([chain.localhost], [publicProvider()])
+const { chains, provider } = configureChains([chain.polygon], [publicProvider()])
 
 const { connectors } = getDefaultWallets({
   appName: 'My RainbowKit App',

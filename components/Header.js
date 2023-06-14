@@ -1,4 +1,4 @@
-import { FaUserAlt, FaPlusSquare, FaListUl, FaAffiliatetheme } from "react-icons/fa";
+import { FaUserAlt, FaPlusSquare, FaListUl, FaAffiliatetheme, FaOctopusDeploy } from "react-icons/fa";
 import styles from '../styles/Home.module.css';
 import Image from 'next/image'
 import {
@@ -18,6 +18,11 @@ export default function Header() {
     const { isConnected } = useAccount();
     const { switchNetwork } = useSwitchNetwork()
     const { chain } = useNetwork();
+    const { asPath } = useRouter()
+
+    const asPathLists = asPath == "/lists" ? "text-warning" : "";
+    const asPathCreate = asPath == "/create" ? "text-warning" : "";
+    const asPathAccount = asPath == "/my" ? "text-warning" : "";
 
     return (
         <div className="navbar text-neutral-content border-solid border-b-2 bg-base-content">
@@ -25,20 +30,24 @@ export default function Header() {
                 <ul className='flex flex-row justify-between gap-6'>
                     <li className="cursor-pointer">
                         <Link className={styles.logo} href="/">
-                            {/* <Image src="/logo-lockup.svg" width={100} height={35} /> */}
-                            <FaAffiliatetheme size="2.2rem" />
+                            <a>
+                                <FaOctopusDeploy className='text-success' size="2.2rem" />
+                            </a>
                         </Link>
+                        {/* <Link className={styles.logo} href="/">
+                            <FaAffiliatetheme size="2.2rem" />
+                        </Link> */}
                     </li>
                     <li className='mt-1'>
                         <Link href="/lists">
-                            <a rel="noreferrer" className={styles.leftToRight}>
-                                <FaListUl size="1.2rem" className='' />&nbsp;&nbsp;<div className='font-bold'>explore</div>
+                            <a className={`${styles.leftToRight} ${asPathLists}`}>
+                                <FaListUl size="1.2rem" />&nbsp;&nbsp;<div className='font-bold'>explore</div>
                             </a>
                         </Link>
                     </li>
                     <li className='mt-1'>
                         <Link href="/create">
-                            <a rel="noreferrer" className={styles.leftToRight}>
+                            <a className={`${styles.leftToRight} ${asPathCreate}`}>
                                 <FaPlusSquare size="1.2rem" className='' />&nbsp;&nbsp;<div className='font-bold'>create</div>
                             </a>
                         </Link>
@@ -46,7 +55,7 @@ export default function Header() {
 
                     <li className='mt-1'>
                         <Link href="/my">
-                            <a rel="noreferrer" className={styles.leftToRight}>
+                            <a className={`${styles.leftToRight} ${asPathAccount}`}>
                                 <FaUserAlt size="1.2rem" className='' />&nbsp;&nbsp;<div className='font-bold'>account</div>
                             </a>
                         </Link>
@@ -70,11 +79,11 @@ export default function Header() {
             </div>
 
             <div className="navbar-end">
-                {isConnected && chain.id != 5 && <button className="btn btn-sm btn-warning ml-3 normal-case" onClick={() => switchNetwork(5)}>switch net</button>}
+                {isConnected && chain.id != 137 && <button className="btn btn-sm btn-warning ml-3 normal-case" onClick={() => switchNetwork(137)}>switch net</button>}
 
                 {!isConnected && (<button className="btn btn-sm btn-warning ml-3 normal-case" onClick={openConnectModal}>connect wallet</button>)}
 
-                {isConnected && chain && chain.id == 5 &&
+                {isConnected && chain &&
                     (<><button className="btn btn-sm btn-success ml-3 normal-case" onClick={openAccountModal}>Profile</button><button className="btn btn-sm btn-info ml-3 normal-case " onClick={openChainModal}>Chain</button></>)
                 }
             </div>
