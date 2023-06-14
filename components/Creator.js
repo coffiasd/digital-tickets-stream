@@ -1,6 +1,6 @@
 // import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { ContractFactory, utils } from 'ethers';
-import ABIJson from "../contract/artifacts/contracts/Ticket.sol/Ticket.json";
+import ABIJson from "../Ticket.json";
 import { ethers } from "ethers";
 import axios from 'axios';
 import { Polybase } from "@polybase/client";
