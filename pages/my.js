@@ -1,4 +1,4 @@
-import ABIJson from "../contract/artifacts/contracts/Ticket.sol/Ticket.json";
+import ABIJson from "../Ticket.json";
 import Head from 'next/head'
 import Footer from '../components/Footer';
 import dynamic from 'next/dynamic';
