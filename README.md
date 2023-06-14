@@ -119,11 +119,34 @@ const createRoom = async (contractAddress) => {
 
 ## Support Chains
 
-Ploygon
+- Ploygon
 
 ## Document tree
 
+```shell
+$ tree -d -L 2 -I 'node_modules'
+digital-tickets-stream
+├── components     (react.js components)
+├── contract       (hardhat contract)
+│   ├── artifacts
+│   ├── cache
+│   ├── contracts
+│   ├── scripts
+│   └── test
+├── pages          (frontend pages)
+│   └── api        (send push protocol notify api)
+├── public
+├── services
+└── styles
+
+```
+
 ## Test
+
+```shell
+cd contract
+npx hardhat test
+```
 
 ## Reference
 
