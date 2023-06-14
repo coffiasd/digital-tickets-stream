@@ -93,13 +93,6 @@ export default function Creator() {
 
     //create room via api.
     const createRoom = async (contractAddress) => {
-        // contractAddress = '0xADC327CC02d3230af723C47eCd91a73F600d7E3A';
-        // console.log(address);
-        // const s = new Date();
-        // let startTime = s.toISOString();
-        // const now = new Date();
-        // now.setDate(now.getDate() + 1); // Adding 1 day
-        // let expiryTime = now.toISOString();
         axios.post('https://api.huddle01.com/api/v1/create-iframe-room', {
             title: title,
             tokenType: 'ERC721',
@@ -107,8 +100,6 @@ export default function Creator() {
             chain: "POLYGON",
             description: description,
             hostWallets: [address.toLowerCase()],
-            // startTime: startTime,
-            // expiryTime: expiryTime
 
         }, {
             headers: {
@@ -117,8 +108,6 @@ export default function Creator() {
             }
         }).then(async function (response) {
             if (response.status == 200) {
-                //kny-giwi-vdg
-                console.log(response.data.data.roomId);
                 await recordRoomInfo(response.data.data.roomId, contractAddress);
                 cleanData();
                 setLoading(false);
