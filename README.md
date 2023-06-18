@@ -9,7 +9,7 @@
 
 ### Summary
 
-`DTS` is a paid video ticketing platform where users can charge tickets from clients by creating ERC721 NFTs ticket, allow users to subscribe to broadcasting notifications.
+`DST` is a live ticketing system managed by an NFT protocol. Users can create custom fee-based NFT protocols or import existing NFTs as tickets for live streaming videos on the platform. Only players who hold specific NFTs are able to enter the user's live streaming room and engage in interactions. We have also integrated a push protocol that allows subscribed users to receive our broadcast information promptly through a browser plugin or mobile app once the live stream begins. Furthermore, our custom NFTs have a withdrawal feature, enabling users who create live streaming rooms to withdraw their ticket revenue at any time
 
 ### Features
 
